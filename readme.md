@@ -1,3 +1,5 @@
+![](izac.png)
+
 # Setting Up Ubuntu on RPi
 
 ```
