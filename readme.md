@@ -6,6 +6,10 @@
 curl -sSL https://raw.githubusercontent.com/RecklessTedsFunland/izac/master/setup.sh | bash -
 ```
 
+## References
+
+- linuxconfig: [Modifying MOTD on Ubuntu 20.04](https://linuxconfig.org/disable-dynamic-motd-and-news-on-ubuntu-20-04-focal-fossa-linux)
+
 # MIT License
 
 **Copyright (c) 2020 Reckless Ted's Funland**
