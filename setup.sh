@@ -94,7 +94,7 @@ timedatectl
 echo ">> Changing MOTD"
 sudo chmod a-x /etc/update-motd.d/10-help-text
 # echo "figlet `uname -n`" >> /etc/update-motd.d/00-header
-sudo change_file "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
+sudo file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
 
 echo ">> Setup I2C for 400kHz"
 sudo apt install -y i2c-tools
