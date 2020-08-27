@@ -52,7 +52,7 @@ file_change(){
     CHANGE=$3
     cat ${FILE} | grep ${KEY}; RET=$?
     if [[ $RET -eq 1 ]]; then
-        echo ${CHANGE} >> ${FILE}
+        sudo echo ${CHANGE} >> ${FILE}
         echo ">> Updated: ${FILE}"
     else
         if [[ "${RET}" -eq 0 ]]; then
@@ -94,11 +94,11 @@ timedatectl
 echo ">> Changing MOTD"
 sudo chmod a-x /etc/update-motd.d/10-help-text
 # echo "figlet `uname -n`" >> /etc/update-motd.d/00-header
-sudo file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
+file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
 
 echo ">> Setup I2C for 400kHz"
 sudo apt install -y i2c-tools
-sudo file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
+file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
 
 echo ">> Set local to en_US.UTF-8"
 sudo locale-gen en_US en_US.UTF-8
@@ -120,7 +120,7 @@ S_ADD="\
    valid users = %S\
    path=/home/%S"
 
-sudo file_change "/etc/samba/smb.conf" "[ubuntu]" ${S_ADD}
+file_change "/etc/samba/smb.conf" "[ubuntu]" ${S_ADD}
 
 echo ">> Setup NodeJS ========================================================"
 if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
