@@ -98,7 +98,7 @@ sudo change_file "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
 
 echo ">> Setup I2C for 400kHz"
 sudo apt install -y i2c-tools
-sudo change_file "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
+sudo file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
 
 echo ">> Set local to en_US.UTF-8"
 sudo locale-gen en_US en_US.UTF-8
@@ -120,7 +120,7 @@ S_ADD="\
    valid users = %S\
    path=/home/%S"
 
-sudo change_file "/etc/samba/smb.conf" "[ubuntu]" ${S_ADD}
+sudo file_change "/etc/samba/smb.conf" "[ubuntu]" ${S_ADD}
 
 echo ">> Setup NodeJS ========================================================"
 if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
@@ -152,7 +152,7 @@ fi
 
 echo ">> Remove cloud crap and san disk stuff ================================"
 # dpkg-reconfigure cloud-init # interactive!!
-sudo apt purge cloud-init
+sudo apt purge -y cloud-init
 # mv -f /etc/cloud/     /tmp
 # mv -f /var/lib/cloud/ /tmp
 
