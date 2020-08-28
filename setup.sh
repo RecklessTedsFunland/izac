@@ -109,7 +109,7 @@ echo ">> Changing MOTD ======================================================="
 sudo chmod a-x /etc/update-motd.d/10-help-text
 # echo "figlet `uname -n`" >> /etc/update-motd.d/00-header
 # file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
-grep "/etc/update-motd.d/00-header" | grep "figlet"
+cat "/etc/update-motd.d/00-header" | grep "figlet"
 if [[ "$?" == 1 ]]; then
     echo "start"
     echo "figlet \`uname -n\`" | sudo tee --append /etc/update-motd.d/00-header > /dev/null
@@ -118,7 +118,7 @@ fi
 echo ">> Setup I2C for 400kHz ================================================"
 sudo apt install -y i2c-tools
 # file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
-grep "/boot/firmware/usercfg.txt" | grep "i2c"
+cat "/boot/firmware/usercfg.txt" | grep "i2c"
 if [[ "$?" == 1 ]]; then
     echo "dtparam=i2c_arm=on,i2c_arm_baudrate=400000" | sudo tee --append /boot/firmware/usercfg.txt
 fi
@@ -145,7 +145,7 @@ sudo cp /etc/samba/smb.conf{,.backup}
 #    path=/home/%S"
 
 # file_change "/etc/samba/smb.conf" "[ubuntu]" "${S_ADD}"
-grep "/etc/samba/smb.conf" | grep "ubuntu"
+cat "/etc/samba/smb.conf" | grep "ubuntu"
 if [[ "$?" == 1 ]]; then
     sudo cat <<EOF >"/etc/samba/smb.conf"
 [ubuntu]
