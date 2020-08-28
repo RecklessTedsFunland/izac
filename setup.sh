@@ -43,26 +43,33 @@ fi
 ZONE="America/New_York"
 # ZONE="America/Denver"
 
-# https://stackoverflow.com/a/13024886/5374768
-# The exit status is 0 if selected lines are found, and 1
-# if not found. If an error occurred the exit status is 2.
-file_change(){
-    FILE=$1
-    KEY=$2 # if true, abort ... already done
-    CHANGE=$3
-    cat ${FILE} | grep ${KEY}; RET=$?
-    if [[ $RET -eq 1 ]]; then
-        sudo echo ${CHANGE} >> ${FILE}
-        echo ">> Updated: ${FILE}"
-    else
-        if [[ "${RET}" -eq 0 ]]; then
-            echo ">> Already good: ${FILE}"
-        else
-            echo "*** ERROR: ${RET} ***"
-            exit 1
-        fi
-    fi
-}
+# # https://stackoverflow.com/a/13024886/5374768
+# # The exit status is 0 if selected lines are found, and 1
+# # if not found. If an error occurred the exit status is 2.
+# file_change(){
+#     FILE=$1
+#     KEY=$2 # if true, abort ... already done
+#     CHANGE=$3
+#     cat ${FILE} | grep ${KEY}; RET=$?
+#     if [[ $RET -eq 1 ]]; then
+#         sudo echo ${CHANGE} >> ${FILE}
+#         echo ">> Updated: ${FILE}"
+#     else
+#         if [[ "${RET}" -eq 0 ]]; then
+#             echo ">> Already good: ${FILE}"
+#         else
+#             echo "*** ERROR: ${RET} ***"
+#             exit 1
+#         fi
+#     fi
+# }
+
+# str_exist(){
+#     FILE=$1
+#     KEY=$2 # 0-string found, 1-string not found
+#     cat ${FILE} | grep ${KEY}; RET=$?
+#     return $RET
+# }
 
 banner(){
     echo $1
@@ -101,11 +108,20 @@ timedatectl
 echo ">> Changing MOTD"
 sudo chmod a-x /etc/update-motd.d/10-help-text
 # echo "figlet `uname -n`" >> /etc/update-motd.d/00-header
-file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
+# file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
+grep "/etc/update-motd.d/00-header" | grep "figlet"
+if [[ "$?" == 0 ]]; then
+    sudo echo "figlet `uname -n`" >> "/etc/update-motd.d/00-header"
+fi
 
 echo ">> Setup I2C for 400kHz"
 sudo apt install -y i2c-tools
-file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
+# file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
+grep "/boot/firmware/usercfg.txt" | grep "i2c"
+if [[ "$?" == 0 ]]; then
+    sudo echo "dtparam=i2c_arm=on,i2c_arm_baudrate=400000" >> "/boot/firmware/usercfg.txt"
+fi
+
 
 echo ">> Set local to en_US.UTF-8"
 sudo locale-gen en_US en_US.UTF-8
@@ -117,17 +133,30 @@ echo "  - enable samba user with: sudo smbpasswd -a ubuntu"
 sudo apt install -y samba avahi-daemon
 sudo cp /etc/samba/smb.conf{,.backup}
 # ufw allow 'Samba'  # already done?
-S_ADD="\
-[ubuntu]\
-   comment = Home Directories\
-   browseable = yes\
-   read only = no\
-   create mask = 0700\
-   directory mask = 0700\
-   valid users = %S\
-   path=/home/%S"
+# S_ADD="\
+# [ubuntu]\
+#    comment = Home Directories\
+#    browseable = yes\
+#    read only = no\
+#    create mask = 0700\
+#    directory mask = 0700\
+#    valid users = %S\
+#    path=/home/%S"
 
-file_change "/etc/samba/smb.conf" "[ubuntu]" "${S_ADD}"
+# file_change "/etc/samba/smb.conf" "[ubuntu]" "${S_ADD}"
+grep "/etc/samba/smb.conf" | grep "ubuntu"
+if [[ "$?" == 0 ]]; then
+    sudo cat <<EOF >"/etc/samba/smb.conf"
+[ubuntu]
+   comment = Home Directories
+   browseable = yes
+   read only = no
+   create mask = 0700
+   directory mask = 0700
+   valid users = %S
+   path=/home/%S"
+EOF
+fi
 
 echo ">> Setup NodeJS ========================================================"
 if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
@@ -174,6 +203,7 @@ if exists snap; then
     echo "snap remove snapd"
     echo "apt purge snapd"
     sudo snap list | sed "1 d" | awk '{print $1}' | while read pkg; do sudo snap remove ${pkg}; done
+    sudo apt -y purge snapd
 fi
 
 echo ">> Clean up sudo stuff ================================================="
@@ -194,7 +224,7 @@ git config --global push.default simple
 mkdir -p ~/github
 cd ~/github
 
-if [[ ! -d "~/github/dotfiles" ]]; then
+if [[ ! -d "/home/${USER}/github/dotfiles" ]]; then
     echo ">> Cloning dotfiles ..."
     git clone git@github.com:walchko/dotfiles.git
     ln -s dotfiles/git-pull.sh .
@@ -210,7 +240,7 @@ echo ">> Install python packages ============================================="
 pip3 install -U twine numpy psutil pytest simplejson colorama pyserial picamera[array]
 
 echo ">> Install poetry ======================================================"
-if [[ ! -d "~/.poetry" ]]; then
+if [[ ! -d "/home/${USER}/.poetry" ]]; then
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 else
     echo ">> Poetry already installed"
