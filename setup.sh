@@ -24,7 +24,7 @@
 # -------------------------------------------------------------------------------
 
 # exit on error
-# set -e
+set -e
 
 # USEAGE="setup.sh <HOSTNAME>"
 
@@ -40,40 +40,12 @@ else
     HOST="ros"
 fi
 
+echo "================================"
+echo " Host: ${HOST}"
+echo "================================"
+
 ZONE="America/New_York"
 # ZONE="America/Denver"
-
-# # https://stackoverflow.com/a/13024886/5374768
-# # The exit status is 0 if selected lines are found, and 1
-# # if not found. If an error occurred the exit status is 2.
-# file_change(){
-#     FILE=$1
-#     KEY=$2 # if true, abort ... already done
-#     CHANGE=$3
-#     cat ${FILE} | grep ${KEY}; RET=$?
-#     if [[ $RET -eq 1 ]]; then
-#         sudo echo ${CHANGE} >> ${FILE}
-#         echo ">> Updated: ${FILE}"
-#     else
-#         if [[ "${RET}" -eq 0 ]]; then
-#             echo ">> Already good: ${FILE}"
-#         else
-#             echo "*** ERROR: ${RET} ***"
-#             exit 1
-#         fi
-#     fi
-# }
-
-# str_exist(){
-#     FILE=$1
-#     KEY=$2 # 0-string found, 1-string not found
-#     cat ${FILE} | grep ${KEY}; RET=$?
-#     return $RET
-# }
-
-# banner(){
-#     echo $1
-# }
 
 # checks to see if a command exists
 # if exists ls; then echo "ls found!"; fi
@@ -86,9 +58,9 @@ echo ""
 echo ">>> START <<<"
 echo ""
 
-echo ""
-echo ">>> Executed as ROOT <<<"
-echo ""
+# echo ""
+# echo ">>> Executed as ROOT <<<"
+# echo ""
 
 echo ">> APT installs ========================================================"
 sudo apt update
@@ -117,7 +89,7 @@ fi
 
 echo ">> Setup I2C for 400kHz ================================================"
 sudo apt install -y i2c-tools
-# file_change "/boot/firmware/usercfg.txt" "i2c" "dtparam=i2c_arm=on,i2c_arm_baudrate=400000"
+
 cat "/boot/firmware/usercfg.txt" | grep i2c
 if [[ "$?" == 1 ]]; then
     echo "dtparam=i2c_arm=on,i2c_arm_baudrate=400000" | sudo tee --append /boot/firmware/usercfg.txt
@@ -134,18 +106,8 @@ echo "  - enable samba user with: sudo smbpasswd -a ubuntu"
 sudo apt install -y samba avahi-daemon
 sudo cp /etc/samba/smb.conf{,.backup}
 # ufw allow 'Samba'  # already done?
-# S_ADD="\
-# [ubuntu]\
-#    comment = Home Directories\
-#    browseable = yes\
-#    read only = no\
-#    create mask = 0700\
-#    directory mask = 0700\
-#    valid users = %S\
-#    path=/home/%S"
 
-# file_change "/etc/samba/smb.conf" "[ubuntu]" "${S_ADD}"
-cat "/etc/samba/smb.conf" | grep "ubuntu"
+cat "/etc/samba/smb.conf" | grep ubuntu
 if [[ "$?" == 1 ]]; then
     sudo cat <<EOF >"/etc/samba/smb.conf"
 [ubuntu]
@@ -157,6 +119,9 @@ if [[ "$?" == 1 ]]; then
    valid users = %S
    path=/home/%S"
 EOF
+    echo "---------------------------------------------------------"
+    echo "** Finish SAMBA install with: sudo smbpasswd -a ubuntu"
+    echo "---------------------------------------------------------"
 fi
 
 echo ">> Setup NodeJS ========================================================"
@@ -170,6 +135,7 @@ fi
 if [[ ! -f "/etc/systemd/system/archeyjs.service" ]]; then
     sudo npm install -g httpserver archeyjs
     ARCHEYJS=`command -v archeyjs`
+    sudo touch /etc/systemd/system/archeyjs.service
     sudo cat <<EOF >/etc/systemd/system/archeyjs.service
 [Service]
 ExecStart=${ARCHEYJS}
@@ -222,8 +188,8 @@ NAME="walchko"
 git config --global user.name ${NAME}
 git config --global user.email ${NAME}@users.noreply.github.com
 git config --global push.default simple
-mkdir -p ~/github
-cd ~/github
+mkdir -p /home/${USER}/github
+cd /home/${USER}/github
 
 if [[ ! -d "/home/${USER}/github/dotfiles" ]]; then
     echo ">> Cloning dotfiles ..."
