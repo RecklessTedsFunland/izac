@@ -107,22 +107,23 @@ sudo apt install -y samba avahi-daemon
 sudo cp /etc/samba/smb.conf{,.backup}
 # ufw allow 'Samba'  # already done?
 
-cat "/etc/samba/smb.conf" | grep ubuntu
-if [[ "$?" == 1 ]]; then
-    sudo cat <<EOF >"/etc/samba/smb.conf"
-[ubuntu]
-   comment = Home Directories
-   browseable = yes
-   read only = no
-   create mask = 0700
-   directory mask = 0700
-   valid users = %S
-   path=/home/%S"
-EOF
-    echo "---------------------------------------------------------"
-    echo "** Finish SAMBA install with: sudo smbpasswd -a ubuntu"
-    echo "---------------------------------------------------------"
-fi
+# doesn't work <<<<<<<<<<<<<<<<<<<<<<<
+# cat "/etc/samba/smb.conf" | grep ubuntu
+# if [[ "$?" == 1 ]]; then
+#     sudo cat <<EOF >"/etc/samba/smb.conf"
+# [ubuntu]
+#    comment = Home Directories
+#    browseable = yes
+#    read only = no
+#    create mask = 0700
+#    directory mask = 0700
+#    valid users = %S
+#    path=/home/%S"
+# EOF
+#     echo "---------------------------------------------------------"
+#     echo "** Finish SAMBA install with: sudo smbpasswd -a ubuntu"
+#     echo "---------------------------------------------------------"
+# fi
 
 echo ">> Setup NodeJS ========================================================"
 if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
@@ -132,26 +133,27 @@ if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
     sudo npm install npm@latest -g
 fi
 
-if [[ ! -f "/etc/systemd/system/archeyjs.service" ]]; then
-    sudo npm install -g httpserver archeyjs
-    ARCHEYJS=`command -v archeyjs`
-    sudo touch /etc/systemd/system/archeyjs.service
-    sudo cat <<EOF >/etc/systemd/system/archeyjs.service
-[Service]
-ExecStart=${ARCHEYJS}
-Restart=always
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=archeyjs
-User=pi
-Group=pi
-Environment=NODE_ENV=production
-[Install]
-WantedBy=multi-user.target
-EOF
-    sudo systemctl --no-pager enable archeyjs
-    sudo systemctl --no-pager start archeyjs
-fi
+# doesn't work <<<<<<<<<<<<<<<<<<<<<<<
+# if [[ ! -f "/etc/systemd/system/archeyjs.service" ]]; then
+#     sudo npm install -g httpserver archeyjs
+#     ARCHEYJS=`command -v archeyjs`
+#     sudo touch /etc/systemd/system/archeyjs.service
+#     sudo cat <<EOF >/etc/systemd/system/archeyjs.service
+# [Service]
+# ExecStart=${ARCHEYJS}
+# Restart=always
+# StandardOutput=syslog
+# StandardError=syslog
+# SyslogIdentifier=archeyjs
+# User=pi
+# Group=pi
+# Environment=NODE_ENV=production
+# [Install]
+# WantedBy=multi-user.target
+# EOF
+#     sudo systemctl --no-pager enable archeyjs
+#     sudo systemctl --no-pager start archeyjs
+# fi
 
 echo ">> Remove cloud crap and san disk stuff ================================"
 # dpkg-reconfigure cloud-init # interactive!!
