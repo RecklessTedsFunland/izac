@@ -111,7 +111,7 @@ sudo chmod a-x /etc/update-motd.d/10-help-text
 # file_change "/etc/update-motd.d/00-header" "figlet" "figlet `uname -n`"
 grep "/etc/update-motd.d/00-header" | grep "figlet"
 if [[ "$?" == 1 ]]; then
-    sudo echo "figlet `uname -n`" >> /etc/update-motd.d/00-header
+    sudo echo "figlet \`uname -n\`" >> /etc/update-motd.d/00-header
 fi
 
 echo ">> Setup I2C for 400kHz"
