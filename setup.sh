@@ -68,6 +68,13 @@ banner(){
     echo $1
 }
 
+# checks to see if a command exists
+# if exists ls; then echo "ls found!"; fi
+exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
+
 echo ""
 echo ">>> START <<<"
 echo ""
@@ -120,7 +127,7 @@ S_ADD="\
    valid users = %S\
    path=/home/%S"
 
-file_change "/etc/samba/smb.conf" "[ubuntu]" ${S_ADD}
+file_change "/etc/samba/smb.conf" "[ubuntu]" "${S_ADD}"
 
 echo ">> Setup NodeJS ========================================================"
 if [[ ! -f "/etc/apt/sources.list.d/nodesource.list" ]]; then
@@ -160,12 +167,14 @@ sudo systemctl disable iscsid.service
 sudo systemctl disable open-iscsi.service
 
 echo ">> Remove Snapd ========================================================"
-echo "  - snap list | awk '{print \$1}' to see packages"
-echo "snap remove lxd"
-echo "snap remove core18"
-echo "snap remove snapd"
-echo "apt purge snapd"
-sudo snap list | sed "1 d" | awk '{print $1}' | while read pkg; do sudo snap remove ${pkg}; done
+if exists snap; then
+    echo "  - snap list | awk '{print \$1}' to see packages"
+    echo "snap remove lxd"
+    echo "snap remove core18"
+    echo "snap remove snapd"
+    echo "apt purge snapd"
+    sudo snap list | sed "1 d" | awk '{print $1}' | while read pkg; do sudo snap remove ${pkg}; done
+fi
 
 echo ">> Clean up sudo stuff ================================================="
 sudo chown -R ${USER}:${USER} /home/${USER}
@@ -185,18 +194,24 @@ git config --global push.default simple
 mkdir -p ~/github
 cd ~/github
 
-if [[ ! -d "./dotfiles" ]]; then
+if [[ ! -d "~/github/dotfiles" ]]; then
     echo ">> Cloning dotfiles ..."
     git clone git@github.com:walchko/dotfiles.git
     ln -s dotfiles/git-pull.sh .
     mv ~/.bashrc ~/.bashrc.orig
     ln -s ~/github/dotfiles/bashrc ~/.bashrc
+else
+    echo ">> Github dotfiles already installed"
 fi
 
-cd
+cd ~
 
 echo ">> Install python packages ============================================="
 pip3 install -U twine numpy psutil pytest simplejson colorama pyserial picamera[array]
 
 echo ">> Install poetry ======================================================"
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+if [[ ! -d "~/.poetry" ]]; then
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+else
+    echo ">> Poetry already installed"
+fi
