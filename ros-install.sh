@@ -50,7 +50,8 @@ fi
 
 # install debian packages
 sudo apt update
-sudo apt -y install ros-foxy-ros-base
+# sudo apt -y install ros-foxy-ros-base
+sudo apt -y install ros-foxy-desktop
 
 # install python auto complete
 sudo apt install -y python3-pip
