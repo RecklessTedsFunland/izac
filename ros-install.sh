@@ -54,4 +54,11 @@ sudo apt -y install ros-foxy-ros-base
 
 # install python auto complete
 sudo apt install -y python3-pip
-pip3 install -U argcomplete
+pip3 install -U colcon-argcomplete colcon-common-extensions
+
+# these seemed missting
+sudo apt install -y libusb-1.0-0-dev libudev-dev
+pip install -U lark-parser RPi.GPIO hidapi rospkg colcon-ros
+
+# enable access to i2c
+sudo usermod -aG i2c $USER
