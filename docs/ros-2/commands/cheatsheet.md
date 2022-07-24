@@ -1,8 +1,6 @@
 ---
 title: ROS2 Command Cheatsheet
 date: 5 Oct 2019
-image: "https://index.ros.org/doc/ros2/_images/Nodes-TopicandService.gif"
-image-height: "400px"
 ---
 
 ![](ros2.png)
