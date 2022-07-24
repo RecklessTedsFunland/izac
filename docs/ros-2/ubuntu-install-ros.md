@@ -27,9 +27,14 @@ version 22.04 LTS or later
 
 ## `python3`
 
+Not sure we need this.
+
 ```bash
-sudo apt install python3-colcon-zsh python3-colcon-cmake python3-colcon-ros
+sudo apt install python3-colcon-zsh python3-colcon-cmake python3-colcon-ros python3-colcon-package-selection
+sudo apt install python3-catkin-pkg
 ```
+
+**deactivate venv:** For some reason `python3-empy` is installed but not seen, so I reinstalled it.
 
 **WARNING:** if `ros2` cannot find your package and/or when you run `colcon build`
 nothing happens, make sure you have installed `python3-colcon-ros`.
