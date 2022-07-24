@@ -1,5 +1,6 @@
+# Ubuntu Install
+
 ---
-title: Ubuntu Install RPi3
 date: 6 Oct 2019
 ---
 
@@ -15,7 +16,7 @@ The arm 64-bit version has `ssh` setup by default and requires a password reset.
 
 - Use the `Raspberry Pi Imager`
     - Select Ubuntu Server 22.04 LTS (64-bit) from Other general-purpose OS
-    - From the *gear icon* set up `username`, `wifi`, and anything else
+    - From the *gear icon* set up username, wifi, hostname, and anything else
 
 - OR get [server image](https://ubuntu.com/download/raspberry-pi)
 version 22.04 LTS or later
@@ -33,6 +34,9 @@ version 22.04 LTS or later
 ```bash
 sudo apt install python3-colcon-zsh python3-colcon-cmake python3-colcon-ros
 ```
+
+**WARNING:** if `ros2` cannot find your package and/or when you run `colcon build`
+nothing happens, make sure you have installed `python3-colcon-ros`.
 
 ## Setup
 
@@ -55,24 +59,27 @@ headless servers.
     ```
     sudo dpkg-reconfigure cloud-init
     sudo apt-get purge cloud-init
-    sudo mv /etc/cloud/ ~/; sudo mv /var/lib/cloud/ ~/cloud-lib
+    mkdir ~/tmp
+    sudo mv /etc/cloud/ ~/tmp
+    sudo mv /var/lib/cloud/ ~/tmp
     ```
 - Disable services that wanted that
     - First figure them out with: `sudo systemctl show -p WantedBy network-online.target`
     - Disable with: `sudo systemctl disable <service>`
-        - I stopped `iscsid.service` and `open-iscsi.service` which are san service things
-        I don't use
+        - I stopped `iscsid.service` and `open-iscsi.service` which are san
+        service things I don't use
         - I kept `nmbd.service` for avahi
-- samba:
+
+## Install samba:
+
+- apt:
 ```
 sudo apt install samba
 sudo ufw allow 'Samba'
 sudo cp /etc/samba/smb.conf{,.backup}
-# update smb.conf
-sudo systemctl restart nmbd
 ```
 - add user with: `sudo smbpasswd -a ubuntu`
-- add user home:
+- add user home `sudo nano /etc/samba/smb.conf`:
 ```
 [homes]
    comment = Home Directories
@@ -83,6 +90,7 @@ sudo systemctl restart nmbd
    valid users = %S
    path=/home/%S
 ```
+- `sudo systemctl restart nmbd.service`
 
 ### Networking
 
