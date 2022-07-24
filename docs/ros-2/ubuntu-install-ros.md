@@ -1,9 +1,5 @@
 # Ubuntu Install
 
----
-date: 6 Oct 2019
----
-
 As of this, ROS2 [release](https://index.ros.org/doc/ros2/Releases/)
 
 - [Desktop Ubuntu](https://docs.ros.org/en/humble/Installation.html)
