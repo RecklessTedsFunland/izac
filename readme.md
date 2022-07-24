@@ -2,6 +2,20 @@
 
 # Setting Up Ubuntu on RPi
 
+## `git`
+
+To prevent source from detecting `0644` files changed to `0755`:
+
+```
+umask 022
+git-clone='git clone --config core.filemode=false '
+```
+
+Local `.git/config` needs to have `filemode = false` so permission changes
+are not tracked. `git` by default doesn't track file modes.
+
+## other
+
 ```bash
 echo ">> APT installs ========================================================"
 sudo apt update
