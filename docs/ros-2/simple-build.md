@@ -27,3 +27,7 @@ date: 22 July 2022
 ## References
 
 - [Building a ROS2 Package](https://medium.com/@thehummingbird/building-a-ros2-project-part-1-a2c02d6ac3d8)
+- ROS2 Tutorial: [Creating a Package](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html)
+- ROS2 Tutorial: [Writing a simple publisher and subscriber (Python)](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
+- ROS2 Tutorial: [Creating custom msg and srv files](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+- ROS2 Tutorial: [Implementing custom interfaces](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html)
