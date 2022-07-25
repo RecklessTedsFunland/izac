@@ -3,7 +3,7 @@ title: ROS2 File Structure
 date: 24 July 2022
 ---
 
-`~/ros2_ws/src/`
+Setup a workspace (`~/ros2_ws/src/`) and within the `src` directory, add packages in the following form:
 
 - my_robot 
     - This package is a metapackage. A metapackage doesn’t contain anything except a list of dependencies to other packages. You can use a metapackage to make it easier to install multiple related packages at once. Example.
@@ -33,3 +33,8 @@ date: 24 July 2022
     - A package used for system tests. Example.
 - my_robot_rviz_plugins 
     - RViz specific plugins go here. Example.
+
+**Remember** to always source these within the workspace:
+
+- `. /opt/ros/galactic/setup.zsh`
+- `. install/setup.zsh`
