@@ -9,6 +9,8 @@ date: 5 Oct 2019
 
 Most of the commands have changed for ros2:
 
+- rosrun:
+    - `ros2 run <package_name> <executable_name>`
 - rosbag: 
     - `ros2 bag record <topic1> <topic2>`
     - `ros2 bag play <bag_file>`
@@ -22,6 +24,9 @@ Most of the commands have changed for ros2:
     - `ros2 param set <node_name> <parameter_name> <value>`
     - `ros2 param dump <node_name>`
         - can also be redirected to file: `ros2 param dump /turtlesim > turtlesim.yaml`
+    - `ros2 param load <node_name> <parameter_file>`
+        - Read-only parameters can only be modified at startup and not afterwards and will give warnings for the "qos_overrides" parameters. Read-only must be set at launch:
+            - `ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>`
 - image_view: `ros2 run rqt_image_view rqt_image_view`
 - rviz2: `ros2 run rviz2 rviz2`
 - rosmsg: `ros2 interface show std_msgs/Bool` -> `bool data`
