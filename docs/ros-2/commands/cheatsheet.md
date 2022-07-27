@@ -11,6 +11,8 @@ Most of the commands have changed for ros2:
 
 - rosrun:
     - `ros2 run <package_name> <executable_name>`
+- ros lifecycle to kill a node:
+    - `ros2 lifecycle set <nodename> shutdown`
 - rosbag: 
     - `ros2 bag record <topic1> <topic2>`
     - `ros2 bag play <bag_file>`
@@ -18,6 +20,9 @@ Most of the commands have changed for ros2:
 - rostopic: 
     - `ros2 topic list`
     - `ros2 topic echo|bw <topic>`
+- rosaction:
+    - `ros2 action list`
+    - `ros2 action send_goal <action_name> <action_type> <values>`
 - rosparameters:
     - `ros2 param list`
     - `ros2 param get <node_name> <parameter_name>`
