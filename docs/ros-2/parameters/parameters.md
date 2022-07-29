@@ -37,6 +37,21 @@ You can set the values at run-time from the command line:
 $ ros2 run ros2_tutorials test_params_rclpy --ros-args -p my_str:="Hello world" -p my_int:=5 -p my_double_array:="[4.4, 5.5, 6.6]"
 ```
 
+## Types
+
+```
+NOT_SET = 0
+BOOL = 1
+INTEGER = 2
+DOUBLE = 3
+STRING = 4
+BYTE_ARRAY = 5
+BOOL_ARRAY = 6
+INTEGER_ARRAY = 7
+DOUBLE_ARRAY = 8
+STRING_ARRAY = 9
+```
+
 ## Setup Callback for Parameters
 
 You can also setup a callback function to handle parameter calls at run-time.
@@ -61,7 +76,7 @@ class TestParams(Node):
         self.declare_parameter('my_str', 'default value')
         self.my_str = self.get_parameter('my_str').value
         self.get_logger().info("New value set: %s" % self.my_str)
-        self.set_parameters_callback(self.parameter_callback)
+        self.add_on_set_parameters_callback(self.parameter_callback)
 ```
 
 ## Launch File
