@@ -41,15 +41,15 @@ $ ros2 run ros2_tutorials test_params_rclpy --ros-args -p my_str:="Hello world" 
 
 ```
 NOT_SET = 0
-BOOL = 1
+BOOL    = 1
 INTEGER = 2
-DOUBLE = 3
-STRING = 4
-BYTE_ARRAY = 5
-BOOL_ARRAY = 6
+DOUBLE  = 3
+STRING  = 4
+BYTE_ARRAY    = 5
+BOOL_ARRAY    = 6
 INTEGER_ARRAY = 7
-DOUBLE_ARRAY = 8
-STRING_ARRAY = 9
+DOUBLE_ARRAY  = 8
+STRING_ARRAY  = 9
 ```
 
 ## Setup Callback for Parameters
