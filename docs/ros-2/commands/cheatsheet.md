@@ -19,7 +19,7 @@ Most of the commands have changed for ros2:
     - `ros2 bag info <bag_file>`
 - rostopic: 
     - `ros2 topic list`
-    - `ros2 topic echo|bw <topic>`
+    - `ros2 topic echo|bw|hz|info <topic>`
 - rosaction:
     - `ros2 action list`
     - `ros2 action send_goal <action_name> <action_type> <values>`
@@ -41,34 +41,34 @@ Most of the commands have changed for ros2:
     bool success   # indicate successful run of triggered service
     string message # informational, e.g. for error messages
     ```
+- rosnode:
+    - Find out what nodes are running: `ros2 node list`
+        ```
+        /listener
+        /talker
+        ```
+    - See node services, pub/sub, and actions: `ros2 node info <node>`
+        ```
+        /talker
+          Subscribers:
 
-- Find out what nodes are running: `ros2 node list`
-    ```
-    /listener
-    /talker
-    ```
-- See node services, pub/sub, and actions: `ros2 node info <node>`
-    ```
-    /talker
-      Subscribers:
+          Publishers:
+            /chatter: std_msgs/msg/String
+            /parameter_events: rcl_interfaces/msg/ParameterEvent
+            /rosout: rcl_interfaces/msg/Log
+          Service Servers:
+            /talker/describe_parameters: rcl_interfaces/srv/DescribeParameters
+            /talker/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+            /talker/get_parameters: rcl_interfaces/srv/GetParameters
+            /talker/list_parameters: rcl_interfaces/srv/ListParameters
+            /talker/set_parameters: rcl_interfaces/srv/SetParameters
+            /talker/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+          Service Clients:
 
-      Publishers:
-        /chatter: std_msgs/msg/String
-        /parameter_events: rcl_interfaces/msg/ParameterEvent
-        /rosout: rcl_interfaces/msg/Log
-      Service Servers:
-        /talker/describe_parameters: rcl_interfaces/srv/DescribeParameters
-        /talker/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
-        /talker/get_parameters: rcl_interfaces/srv/GetParameters
-        /talker/list_parameters: rcl_interfaces/srv/ListParameters
-        /talker/set_parameters: rcl_interfaces/srv/SetParameters
-        /talker/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
-      Service Clients:
+          Action Servers:
 
-      Action Servers:
-
-      Action Clients:
-    ```
+          Action Clients:
+        ```
 
 # References
 
