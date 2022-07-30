@@ -3,6 +3,11 @@ title: Setup Picamera on Ubuntu Server for OpenCV
 date: 7 Sept 2020
 ---
 
+> **WARNING:**
+>
+> `picamera` is not really supported anymore and doesn't support ARM64, only ARM32
+
+
 If you don't want to use `picamera` (python only) and want OpenCV (C++ or python) to access
 the camera (`/dev/video0`), then do:
 
