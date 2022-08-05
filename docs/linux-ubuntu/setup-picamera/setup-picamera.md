@@ -3,6 +3,16 @@ title: Setup Picamera on Ubuntu Server for OpenCV
 date: 7 Sept 2020
 ---
 
+
+> **WARNING:** 
+>
+> PiCamera **dones not work on ARM64**
+
+> **WARNING:** 
+>
+> ROS 2 on ARM32 requires you to compile *all* packages yourself. Only ARM64
+> has binary precompiled packages.
+
 > **WARNING:**
 >
 > `picamera` software is not really supported anymore and doesn't support ARM64, only ARM32.
