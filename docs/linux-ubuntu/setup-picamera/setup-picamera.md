@@ -5,7 +5,7 @@ date: 7 Sept 2020
 
 > **WARNING:**
 >
-> `picamera` is not really supported anymore and doesn't support ARM64, only ARM32.
+> `picamera` software is not really supported anymore and doesn't support ARM64, only ARM32.
 > The underlying library (`mmal`) appears to only be 32bit and the maintainers don't
 > have time to invest on 64bit.
 
