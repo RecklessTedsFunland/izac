@@ -25,8 +25,14 @@ I am doing this on macOS using Docker (Ubuntu 20.04 version).
   - Downloads: https://github.com/ethz-asl/kalibr/wiki/downloads
   - [IMU-CAM.bag](https://drive.google.com/file/d/1dHkfsPBzUbnoyXpmiGxSQiqt4hrPXF2z/view?usp=sharing)
   - [aprilgrid_6x6.yml](https://drive.google.com/file/d/10zw3LvCDvXYyTQje4Gt4vzJMMYOuGsma/view?usp=sharing)
-- Download the zip of the Kalibr repo
-- Save bag and aprilgrid.yml to `data` folder in the repo (I made the folder) 
+- Get the software
+  - Download the zip of the Kalibr repo
+  - Or clone the repo, here is the version I tested from 24 Nov 2022, Merge pull request #582:
+    ```
+    git clone https://github.com/ethz-asl/kalibr.git
+    git checkout -b test ee5a57d
+    ```
+- Save bag and `aprilgrid.yml` to `data` folder in the repo (I made the folder) 
 
 ## Build and Run Image
 
