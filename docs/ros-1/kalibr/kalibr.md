@@ -106,3 +106,10 @@ timestamp,omega_x,omega_y,omega_z,alpha_x,alpha_y,alpha_z
 1386030208736607488,0.5,-0.1,-0.1,8.1,-1.9,-3.3
 ```
 
+## Generate Custom Target
+
+I had to install: `sudo apt install texlive-base` and `pip3 install pxy`
+
+```
+rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.3 --type apriltag
+```
