@@ -117,11 +117,15 @@ I had to install: `sudo apt install texlive-base` and `pip3 install pxy`
 rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.2 --type apriltag
 ```
 
-<a href="target.pdf"></a>
+Here is the result: [target.pdf](target.pdf)
 
-<iframe src="target.pdf">pdf</iframe>
+`target.yml`
 
-<embed src="target.pdf" type="application/pdf">
-
-<object data="target.pdf" type="application/pdf" width="100%"> 
-</object>
+```yaml
+target_type: 'aprilgrid' #gridtype
+tagCols: 5               #number of apriltags
+tagRows: 4               #number of apriltags
+tagSize: 0.020           #size of apriltag, edge to edge [m]
+tagSpacing: 0.2          #ratio of space between tags to tagSize
+codeOffset: 0            #code offset for the first tag in the aprilboard
+```
