@@ -131,7 +131,7 @@ tagSpacing: 0.2          #ratio of space between tags to tagSize
 codeOffset: 0            #code offset for the first tag in the aprilboard
 ```
 
-## Rolling Shutter
+## Rolling Shutter Results
 
 This doesn't seem to work ... I get a `[ERROR] [1672599708.485615]: Exception: float division by zero` 
 when I run it.
@@ -139,3 +139,74 @@ when I run it.
 ```
 rosrun kalibr kalibr_calibrate_rs_cameras --bag awesome.bag --model pinhole-radtan-rs --target ../april_4x5.yml --topic /cam0/image_raw --inverse-feature-variance 1 --frame-rate 30
 ```
+
+## Camera Calibration Results
+
+So it appears to have worked:
+
+[`awesome-report-cam.pdf`](awesome-report-cam.pdf)
+
+[`awesome-results-cam.txt`](awesome-results-cam.txt)
+
+```
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (/cam0/image_raw):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [ 0.07536437 -0.18468836  0.00092726  0.00033364] +- [0.00560802 0.01507799 0.00053571 0.00044853]
+    projection: [1151.13341587 1150.30902036  648.80503297  365.50538407] +- [0.80018663 0.76459404 0.07637371 0.85366651]
+    reprojection error: [0.000121, -0.000036] +- [0.380177, 0.318709]
+
+cam1 (/cam1/image_raw):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [ 0.06143751 -0.13747218  0.00153052 -0.00356831] +- [0.00531193 0.01316079 0.00052539 0.00045102]
+    projection: [1155.11798085 1154.48430634  645.37252872  365.78508202] +- [0.80123604 0.76772923 0.14196111 0.82729782]
+    reprojection error: [-0.000098, -0.000042] +- [0.416945, 0.325086]
+
+baseline T_1_0:
+    q: [-0.00087935 -0.00270995 -0.0008824   0.99999555] +- [0.00150475 0.00034032 0.00017118]
+    t: [-0.02997144 -0.00027389  0.00036353] +- [0.00010267 0.00006741 0.00030318]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 4
+    Cols: 5
+    Size: 0.02 [m]
+    Spacing 0.004 [m]
+```
+
+[`awesome-camchain.yaml`](awesome-camchain.yaml)
+
+```yaml
+cam0:
+  cam_overlaps: [1]
+  camera_model: pinhole
+  distortion_coeffs: [0.0753643713800888, -0.18468836000112895, 0.0009272632396975177, 0.00033363659205522315]
+  distortion_model: radtan
+  intrinsics: [1151.1334158718826, 1150.3090203551176, 648.8050329663585, 365.5053840716478]
+  resolution: [1280, 720]
+  rostopic: /cam0/image_raw
+cam1:
+  T_cn_cnm1:
+  - [0.9999837550791691, -0.0017600256386679483, 0.0054214285495924955, -0.0299714404913448]
+  - [0.0017695575766284754, 0.9999968962420779, -0.0017539019917587435, -0.00027389486151521193]
+  - [-0.0054183248103174715, 0.0017634670297258209, 0.9999837658383699, 0.0003635283259655295]
+  - [0.0, 0.0, 0.0, 1.0]
+  cam_overlaps: [0]
+  camera_model: pinhole
+  distortion_coeffs: [0.06143751113012889, -0.137472177155589, 0.0015305181120103494, -0.003568309204891758]
+  distortion_model: radtan
+  intrinsics: [1155.1179808462648, 1154.4843063411186, 645.3725287189998, 365.7850820223632]
+  resolution: [1280, 720]
+  rostopic: /cam1/image_raw
+```
+
+## Camera and IMU Results
+
+TBD
