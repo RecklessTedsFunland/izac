@@ -116,3 +116,12 @@ I had to install: `sudo apt install texlive-base` and `pip3 install pxy`
 ```
 rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.2 --type apriltag
 ```
+
+<a href="target.pdf"></a>
+
+<iframe src="target.pdf">pdf</iframe>
+
+<embed src="target.pdf" type="application/pdf">
+
+<object data="target.pdf" type="application/pdf" width="100%"> 
+</object>
