@@ -119,7 +119,7 @@ rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.2 -
 
 Here is the result: [target.pdf](target.pdf)
 
-`target.yml`
+[`aprilgrid.yml`](aprilgrid.yml)
 
 ```yaml
 target_type: 'aprilgrid' #gridtype
