@@ -80,9 +80,10 @@ root@8b064ce39682:/catkin_ws# rostopic list
 
 ## Calibrate
 
-1. `rosrun kalibr kalibr_bagcreater --folder dataset-dir/. --output-bag awsome.bag`
-1. `rosrun kalibr kalibr_calibrate_cameras --bag /data/imu_april.bag --target /data/april_6x6.yaml --models pinhole-radtan pinhole-radtan --topics /cam0/image_raw /cam1/image_raw --dont-show-report`
-2. `rosrun kalibr kalibr_calibrate_imu_camera --bag [filename.bag] --cam [camchain.yaml] --imu [imu.yaml] --target [target.yaml]`
+1. `rosrun kalibr kalibr_bagcreater --folder dataset/. --output-bag awsome.bag`
+    - Verify it worked with: `rosbag info awesome.bag`
+1. `rosrun kalibr kalibr_calibrate_cameras --bag awesome.bag --target ../april_4x5.yml --models pinhole-radtan pinhole-radtan --topics /cam0/image_raw /cam1/image_raw --dont-show-report`
+1. `rosrun kalibr kalibr_calibrate_imu_camera --bag awesome.bag --cam [camchain.yaml] --imu [imu.yaml] --target ../april_4x5.yml`
 
 ## Bag Creation 
 
@@ -128,4 +129,13 @@ tagRows: 4               #number of apriltags
 tagSize: 0.020           #size of apriltag, edge to edge [m]
 tagSpacing: 0.2          #ratio of space between tags to tagSize
 codeOffset: 0            #code offset for the first tag in the aprilboard
+```
+
+## Rolling Shutter
+
+This doesn't seem to work ... I get a `[ERROR] [1672599708.485615]: Exception: float division by zero` 
+when I run it.
+
+```
+rosrun kalibr kalibr_calibrate_rs_cameras --bag awesome.bag --model pinhole-radtan-rs --target ../april_4x5.yml --topic /cam0/image_raw --inverse-feature-variance 1 --frame-rate 30
 ```
