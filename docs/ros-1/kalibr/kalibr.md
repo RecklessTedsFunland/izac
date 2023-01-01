@@ -65,20 +65,17 @@ I am doing this on macOS using Docker (Ubuntu 20.04 version).
     - Open another terminal
         - `docker exec -it <container_name> bash` will log you in
         - `rostopic echo /imu0`
+        ```
+        root@8b064ce39682:/catkin_ws# rostopic list
+        /cam0/image_raw
+        /cam1/image_raw
+        /clock
+        /imu0
+        /rosout
+        /rosout_agg
+        ```
 
-## IMU-CAM Bag
-
-```
-root@8b064ce39682:/catkin_ws# rostopic list
-/cam0/image_raw
-/cam1/image_raw
-/clock
-/imu0
-/rosout
-/rosout_agg
-```
-
-## Calibrate
+## Calibration Setup and Run Commands
 
 1. `rosrun kalibr kalibr_bagcreater --folder dataset/. --output-bag awsome.bag`
     - Verify it worked with: `rosbag info awesome.bag`
@@ -88,6 +85,9 @@ root@8b064ce39682:/catkin_ws# rostopic list
 ## Bag Creation 
 
 [Ref](https://github.com/ethz-asl/kalibr/wiki/bag-format)
+
+Setup a folder structure like this with image file names in 
+nanoseconds (`python3` use `time.monotonic_ns()`):
 
 ```
 +-- dataset-dir
@@ -101,6 +101,7 @@ root@8b064ce39682:/catkin_ws# rostopic list
     │   \-- 1385030212176607500.png
     \-- imu0.csv
 ```
+
 IMU csv file:
 
 ```
@@ -109,6 +110,10 @@ timestamp,omega_x,omega_y,omega_z,alpha_x,alpha_y,alpha_z
  ...
 1386030208736607488,0.5,-0.1,-0.1,8.1,-1.9,-3.3
 ```
+
+- `timestamp`: nanoseconds
+- `omega`: rad/sec
+- `alpha`: m/sec^2
 
 ## Generate Custom Target
 
