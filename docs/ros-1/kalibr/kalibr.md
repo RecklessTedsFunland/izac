@@ -37,7 +37,10 @@ I am doing this on macOS using Docker (Ubuntu 20.04 version).
 ## Build and Run Image
 
 1. `docker build -t kalibr -f Docker_ros1_20_04 .`
-1. `docker run -it kalibr`
+1. `docker run -it -v "$PWD/data:/data" kalibr`
+    - **WARNING:** Once you set the volume path to `$PWD/data` you cannot
+      change it when you run the container again. I *think* if you redo the
+      `docker run ...` command you can change the volume location.
     - Check bag file: 
         ```
         root@8b064ce39682:/data# rosbag info imu_april.bag
@@ -111,5 +114,5 @@ timestamp,omega_x,omega_y,omega_z,alpha_x,alpha_y,alpha_z
 I had to install: `sudo apt install texlive-base` and `pip3 install pxy`
 
 ```
-rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.3 --type apriltag
+rosrun kalibr kalibr_create_target_pdf --nx 5 --ny 4 --tsize 0.02 --tspace 0.2 --type apriltag
 ```
