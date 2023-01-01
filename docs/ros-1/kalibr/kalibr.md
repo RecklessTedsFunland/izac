@@ -36,6 +36,7 @@ I am doing this on macOS using Docker (Ubuntu 20.04 version).
 
 ## Build and Run Image
 
+1. Put data into the `data` your folder according the prescribed layout on the Kalibr wiki
 1. `docker build -t kalibr -f Docker_ros1_20_04 .`
 1. `docker run -it -v "$PWD/data:/data" kalibr`
     - **WARNING:** Once you set the volume path to `$PWD/data` you cannot
