@@ -1,4 +1,4 @@
-# i2c
+# `i2c` Setup
 
 Raspberry Pi OS 64-bit
 
