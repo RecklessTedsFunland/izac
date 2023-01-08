@@ -6,6 +6,10 @@
 
 - [Waveshare wiki](https://www.waveshare.com/wiki/CM4-IO-BASE-B)
 - [Booting CM4 from NVME](https://blog.j2i.net/2022/04/12/booting-a-pi-cm4-on-nvme/)
+- [Bootloader Updating on RPi](https://pimylifeup.com/raspberry-pi-bootloader/)
+
+> **WARNING:** You can **NOT** us the SD card if you CM4 has eMMC since they are 
+> hooked up to the same IO lines.
 
 ## Loading Image on CM4
 
@@ -20,6 +24,23 @@ plug in the external [ref](https://www.jeffgeerling.com/blog/2022/enable-externa
 1. Download rpiboot: https://github.com/raspberrypi/usbboot
     - `make`
     - `./rpiboot`
+    ```
+    (py)  kevin@Logan usbboot-master % ./rpiboot
+    RPIBOOT: build-date Dec 30 2022 version 20221215~105525 
+    Waiting for BCM2835/6/7/2711...
+    Loading embedded: bootcode4.bin
+    Sending bootcode.bin
+    Successful read 4 bytes 
+    Waiting for BCM2835/6/7/2711...
+    Loading embedded: bootcode4.bin
+    Second stage boot server
+    Cannot open file config.txt
+    Cannot open file pieeprom.sig
+    Loading embedded: start4.elf
+    File read: start4.elf
+    Cannot open file fixup4.dat
+    Second stage boot server done
+    ```
 1. Set Boot selection switch to `on`
 1. Don't plug anything in, just the CM4 module
 1. Plug in the USB-C cable and the pi will mount as a USB drive
@@ -32,3 +53,11 @@ plug in the external [ref](https://www.jeffgeerling.com/blog/2022/enable-externa
 Mine is old, 2021, while the newest is [2022-12-07](https://github.com/raspberrypi/rpi-eeprom/releases) available from the raspberry pi rpi-eeprom github release page.
 
 Having issues upgrading, since again, can't boot.
+
+Maybe working??????
+
+1. Mount CM4 with `./rpiboot` as shown above
+2. Open `Raspberry Pi Imager`
+    - OS -> Misc utiliy -> Bootloader -> SD Card Boot
+    - Choose drive
+    - Write
