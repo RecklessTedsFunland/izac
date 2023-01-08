@@ -77,3 +77,17 @@ Maybe working??????
     - Choose drive
     - Write
 
+```
+sudo CM4_ENABLE_RPI_EEPROM_UPDATE=1 rpi-eeprom-update
+
+BOOTLOADER: up to date
+   CURRENT: Tue 06 Jul 2021 10:44:53 AM UTC (1625568293)
+    LATEST: Tue 06 Jul 2021 10:44:53 AM UTC (1625568293)
+   RELEASE: stable (/lib/firmware/raspberrypi/bootloader/stable)
+            Use raspi-config to change the release.
+
+  VL805_FW: Using bootloader EEPROM
+     VL805: up to date
+   CURRENT:
+    LATEST:
+```
