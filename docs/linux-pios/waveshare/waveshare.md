@@ -50,7 +50,22 @@ plug in the external [ref](https://www.jeffgeerling.com/blog/2022/enable-externa
 
 ## Update eeprom
 
+> **WARNING:** `sudo rpi-eeprom-update` appears to be disabled for some reason on the 64b version of rpiOS
+
+> **WARNING:** You don't seem to be able to update the firmware on the 64b rpiOS ... wtf?
+
 Mine is old, 2021, while the newest is [2022-12-07](https://github.com/raspberrypi/rpi-eeprom/releases) available from the raspberry pi rpi-eeprom github release page.
+
+See current version of firmware: `vcgencmd bootloader_version`
+
+```
+kevin@cm4:~ $ vcgencmd bootloader_version
+Feb 16 2021 13:23:36
+version d6d82cf99bcb3e9a166a34cfde53130957a36bd3 (release)
+timestamp 1613481816
+update-time 1613481816
+capabilities 0x0000001f
+```
 
 Having issues upgrading, since again, can't boot.
 
@@ -61,3 +76,4 @@ Maybe working??????
     - OS -> Misc utiliy -> Bootloader -> SD Card Boot
     - Choose drive
     - Write
+
