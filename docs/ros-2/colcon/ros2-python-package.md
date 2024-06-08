@@ -2,6 +2,10 @@
 
 ## Setup Files
 
+- package name: `ros2_demo_py`
+- node name: `py_node`
+- type: Python3
+
 ```
 mkdir -p ros2/src
 cd ros2/src
@@ -10,7 +14,7 @@ ros2 pkg create --build-type ament_python --node-name py_node ros2_demo_py
 
 ### setup.py
 
-Add new nodes to `entry_points`
+Add new nodes to `entry_points` as `node_name = package_name.node_file_name:main_function`
 
 ```python
 from setuptools import setup
