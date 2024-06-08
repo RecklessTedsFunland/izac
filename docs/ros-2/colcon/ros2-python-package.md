@@ -1,7 +1,4 @@
----
-title: ROS2 Python Package
-date: 3 Aug 2020
----
+# ROS2 Python Package
 
 ## Setup Files
 
@@ -12,6 +9,8 @@ ros2 pkg create --build-type ament_python --node-name py_node ros2_demo_py
 ```
 
 ### setup.py
+
+Add new nodes to `entry_points`
 
 ```python
 from setuptools import setup
