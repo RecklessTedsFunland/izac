@@ -5,11 +5,9 @@ image: "https://i.pinimg.com/564x/94/22/fc/9422fc82bb5c347961c465c85cc91599.jpg"
 image-height: "300px"
 ---
 
-*Note:* I am using the `zsh` shell instead of `bash`.
-
 Unfortunately the examples are shitty, overly verbose for no reason, leave stuff out and don't make sense.
 
-1. Source the ros setup file from `/opt/ros/.../setup.zsh`
+1. Source the ros setup file from `/opt/ros/.../setup.bash`
 1. Create a workspace (`ros2`) and a source code folder (`ros2/src`)
 1. Move into the workspace
 1. Clone some example directories into `src`
@@ -17,7 +15,7 @@ Unfortunately the examples are shitty, overly verbose for no reason, leave stuff
 1. Build with examples `colcon`, the latest crappy ros build tool
 
 ```
-source /opt/ros/foxy/setup.zsh
+source /opt/ros/foxy/setup.bash
 mkdir -p ros2/src
 cd ros2
 git clone https://github.com/ros2/examples src/examples
@@ -28,7 +26,7 @@ git clone https://github.com/ros2/example_interfaces.git src/example_interfaces
 colcon build --symlink-install
 ```
 
-**Note:** The option `--symlink-install` is very important, it allows to use symlinks instead of copying files to the ROS2 folders during the installation, where possible. Each package in ROS2 must be installed and all the files used by the nodes must be copied into the installation folders. Using symlinks allows you to modify them in your workspace, reflecting the modification during the next executions without the needing to issue a new colcon build command. This is true only for all the files that don't need to be compiled (Python scripts, configurations, etc.).
+> **Note:** The option `--symlink-install` is very important, it allows to use symlinks instead of copying files to the ROS2 folders during the installation, where possible. Each package in ROS2 must be installed and all the files used by the nodes must be copied into the installation folders. Using symlinks allows you to modify them in your workspace, reflecting the modification during the next executions without the needing to issue a new colcon build command. This is true only for all the files that don't need to be compiled (Python scripts, configurations, etc.).
 
 So now you have a directory structure that looks like:
 
@@ -45,7 +43,7 @@ ros2
 
 Now run `colcon test` to make sure all is well.
 
-Now run `source install/setup.zsh` (best) or alternatively `source install/local_setup.zsh`. The difference is:
+Now run `source install/setup.bash` (best) or alternatively `source install/local_setup.bash`. The difference is:
 
 - The `local_setup.<ext>` script sets up the environment for all package in the prefix path where 
 that script is. It doesn't include any parent workspaces.
