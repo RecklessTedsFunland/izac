@@ -9,7 +9,9 @@ ROS2 rclcpp package:
 1. Move to source directory: `cd ws/src`
 1. Create package: `ros2 pkg create --build-type ament_cmake cpp <my_cool_pkg>`
 1. Install dependancies: `rosdep install -i --from-path src --rosdistro <distro> -y`
-1. Build: `colcon build –symlink-install --packages-select cpp_<my_cool_pkg>`
+1. Build:
+   - `colcon build`
+   - `colcon build --packages-select <my_cool_pkg>`
 1. Source setup file: `. install/setup.bash`
 1. Run package: `ros2 run <my_cool_pkg> <binary>`
 
