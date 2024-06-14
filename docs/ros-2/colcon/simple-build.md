@@ -19,7 +19,7 @@
 
 ## Example
 
-```
+```bash
 source /opt/ros/foxy/setup.bash
 mkdir -p ros2/src
 cd ros2
@@ -28,14 +28,12 @@ cd src/examples
 git checkout $ROS_DISTRO
 cd ../..
 git clone https://github.com/ros2/example_interfaces.git src/example_interfaces
-colcon build --symlink-install
+colcon build
 ```
-
-> **Note:** The option `--symlink-install` is very important, it allows to use symlinks instead of copying files to the ROS2 folders during the installation, where possible. Each package in ROS2 must be installed and all the files used by the nodes must be copied into the installation folders. Using symlinks allows you to modify them in your workspace, reflecting the modification during the next executions without the needing to issue a new colcon build command. This is true only for all the files that don't need to be compiled (Python scripts, configurations, etc.).
 
 So now you have a directory structure that looks like:
 
-```
+```bash
 ros2
 |-bulid
 |-install
