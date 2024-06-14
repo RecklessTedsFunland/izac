@@ -18,12 +18,17 @@ ROS2 rclcpp package:
 ## Binary CMake Example
 
 ```cmake
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(<my_cool_package>)
 
-# Default to C++14
+# Default to C17
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 17)
+endif()
+
+# Default to C++20
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -37,6 +42,7 @@ find_package(std_msgs REQUIRED)
 add_executable(<binary> src/main.cpp)
 ament_target_dependencies(<binary> rclcpp std_msgs)
 
+# Need this for setup.bash to find the binary
 install(TARGETS
   <binary>
   DESTINATION lib/${PROJECT_NAME})
@@ -129,6 +135,35 @@ install(
   DIRECTORY include/ ${CMAKE_CURRENT_BINARY_DIR}/include/
   DESTINATION include
 )
+```
+
+## Package.xml
+
+```xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>gci_sensors</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="walchko@users.noreply.github.com">walchko</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>rclcpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
 ```
 
 # References
