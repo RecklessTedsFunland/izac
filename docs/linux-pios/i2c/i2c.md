@@ -2,7 +2,7 @@
 
 Raspberry Pi OS 64-bit
 
-Change `/boot/config.txt` to the following and reboot.
+Change `/boot/firmware/config.txt` to the following and reboot.
 
 ```
 dtparam=i2c_arm=on
