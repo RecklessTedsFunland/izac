@@ -132,6 +132,7 @@ sudo usermod -aG video <user_name>
 
 import numpy as np
 import cv2
+import time
 
 cap = cv2.VideoCapture(0)
 gray = None
@@ -148,6 +149,7 @@ for _ in range(5):
     #cv2.imshow('frame',gray)
     #if cv2.waitKey(1) & 0xFF == ord('q'):
     #    break
+    time.sleep(0.1)
 
 # When everything done, release the capture
 cap.release()
