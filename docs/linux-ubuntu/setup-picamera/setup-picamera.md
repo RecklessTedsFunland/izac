@@ -9,6 +9,19 @@ date: 20 June 2024
 > The underlying library (`mmal`) appears to only be 32bit and the maintainers don't
 > have time to invest on 64bit.
 
+## `apt`
+
+I installed a bunch of stuff ... not sure what is needed.
+
+```bash
+libcamera-tools/noble,now 0.2.0-3fakesync1build6 arm64 [installed]
+libcamera-v4l2/noble,now 0.2.0-3fakesync1build6 arm64 [installed]
+libcamera0.2/noble,now 0.2.0-3fakesync1build6 arm64 [installed,automatic]
+ros-jazzy-libcamera/noble,now 0.3.0-3noble.20240528.134759 arm64 [installed]
+
+libv4l2rds0t64/noble,now 1.26.1-4build3 arm64 [installed,automatic]
+```
+
 ## Set `/boot/firmware/config.txt`
 
 Add `start_x=1`,`gpu_mem=256` and `dtoverlay=imx219,cam0` to `config.txt`. The
