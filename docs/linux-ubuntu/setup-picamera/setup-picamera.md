@@ -1,23 +1,88 @@
 ---
 title: Setup Picamera on Ubuntu Server for OpenCV
-date: 7 Sept 2020
+date: 20 June 2024
 ---
-
-
-> **WARNING:** 
->
-> PiCamera **dones not work on ARM64**
-
-> **WARNING:** 
->
-> ROS 2 on ARM32 requires you to compile *all* packages yourself. Only ARM64
-> has binary precompiled packages.
 
 > **WARNING:**
 >
 > `picamera` software is not really supported anymore and doesn't support ARM64, only ARM32.
 > The underlying library (`mmal`) appears to only be 32bit and the maintainers don't
 > have time to invest on 64bit.
+
+## Set `/boot/firmware/config.txt`
+
+Add `start_x=1`,`gpu_mem=256` and `dtoverlay=imx219,cam0` to `config.txt`. The
+full output is:
+
+```bash
+$ cat /boot/firmware/config.txt 
+[all]
+kernel=vmlinuz
+cmdline=cmdline.txt
+initramfs initrd.img followkernel
+
+[pi4]
+max_framebuffers=2
+arm_boost=1
+
+[all]
+# Enable the audio output, I2C and SPI interfaces on the GPIO header. As these
+# parameters related to the base device-tree they must appear *before* any
+# other dtoverlay= specification
+dtparam=audio=on
+dtparam=i2c_arm=on,i2c_arm_baudrate=400000
+dtparam=spi=on
+
+# Comment out the following line if the edges of the desktop appear outside
+# the edges of your display
+disable_overscan=1
+
+# If you have issues with audio, you may try uncommenting the following line
+# which forces the HDMI output into HDMI mode instead of DVI (which doesn't
+# support audio output)
+#hdmi_drive=2
+
+# Enable the serial pins
+enable_uart=1
+
+# Autoload overlays for any recognized cameras or displays that are attached
+# to the CSI/DSI ports. Please note this is for libcamera support, *not* for
+# the legacy camera stack
+#camera_auto_detect=1 << comment out
+dtoverlay=imx219,cam0
+display_auto_detect=1
+
+# Config settings specific to arm64
+arm_64bit=1
+dtoverlay=dwc2
+
+# Enable the KMS ("full" KMS) graphics overlay, leaving GPU memory as the
+# default (the kernel is in control of graphics memory with full KMS)
+dtoverlay=vc4-kms-v3d
+disable_fw_kms_setup=1
+
+[pi3+]
+# Use a smaller contiguous memory area, specifically on the 3A+ to avoid an
+# OOM oops on boot. The 3B+ is also affected by this section, but it shouldn't
+# cause any issues on that board
+dtoverlay=vc4-kms-v3d,cma-128
+
+[pi02]
+# The Zero 2W is another 512MB board which is occasionally affected by the same
+# OOM oops on boot.
+dtoverlay=vc4-kms-v3d,cma-128
+
+[all]
+
+[cm4]
+# Enable the USB2 outputs on the IO board (assuming your CM4 is plugged into
+# such a board)
+dtoverlay=dwc2,dr_mode=host
+
+[all]
+start_x=1
+gpu_mem=256 # on Pi4, should be able to do 256, 128 otherwise
+```
 
 ## Is the Camera There?
 
@@ -28,11 +93,24 @@ date: 7 Sept 2020
 | `supported=1 detected=0` | Electrical connection error or bad camera |
 
 ```bash
-i2cdetect -y 0
+$ vcgencmd get_camerara
+supported=1 detected=1, libcamera interfaces=0
 ```
 
-The camerea i2c controls are on `/dev/i2c-0`, so this should show the camerea, but I 
-don't see anything.
+```bash
+$ i2cdetect -y 0
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:                         -- -- -- -- -- -- -- -- 
+10: 10 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- 64 -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --      
+```
+
+The camerea i2c controls are on `/dev/i2c-0`, so I assume what is found is part of the camera.
 
 ```bash
 v4l2-ctl --list-formats-ext  # list supported formats
@@ -40,24 +118,6 @@ v4l2-ctl --list-devices
 v4l2-ctl -d /dev/video0 --all
 v4l2-ctl --list-formats
 ```
-
-## Boot Config
-
-If you don't want to use `picamera` (python only) and want OpenCV (C++ or python) to access
-the camera (`/dev/video0`), then do:
-
-- Edit `/boot/firmware/config.txt` and add the following to the bottom:
-```
-start_x=1
-gpu_mem=128 # on Pi4, should be able to do 256
-```
-- Reboot
-- You should see `/dev/video0`
-
-> *Note:* there is already a `camera_auto_detect=1` in the `config.txt` that looks
-> for the camera.
-
-> *Note:* for some reason, adding this to `/boot/firmware/usercfg.txt` didn't work.
 
 ## Add User to Video Group
 
