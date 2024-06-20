@@ -119,6 +119,87 @@ v4l2-ctl -d /dev/video0 --all
 v4l2-ctl --list-formats
 ```
 
+```bash
+$ v4l2-ctl --list-devices
+bcm2835-codec-decode (platform:bcm2835-codec):
+	/dev/video10
+	/dev/video11
+	/dev/video12
+	/dev/video18
+	/dev/video31
+	/dev/media3
+
+bcm2835-isp (platform:bcm2835-isp):
+	/dev/video13
+	/dev/video14
+	/dev/video15
+	/dev/video16
+	/dev/video20
+	/dev/video21
+	/dev/video22
+	/dev/video23
+	/dev/media0
+	/dev/media1
+
+mmal service 16.1 (platform:bcm2835_v4l2-0):
+	/dev/video0
+
+rpivid (platform:rpivid):
+	/dev/video19
+	/dev/media2
+
+
+```
+
+```bash
+$ v4l2-ctl -d /dev/video0 --list-ctrls
+
+User Controls
+
+                     brightness 0x00980900 (int)    : min=0 max=100 step=1 default=50 value=50 flags=slider
+                       contrast 0x00980901 (int)    : min=-100 max=100 step=1 default=0 value=0 flags=slider
+                     saturation 0x00980902 (int)    : min=-100 max=100 step=1 default=0 value=0 flags=slider
+                    red_balance 0x0098090e (int)    : min=1 max=7999 step=1 default=1000 value=1000 flags=slider
+                   blue_balance 0x0098090f (int)    : min=1 max=7999 step=1 default=1000 value=1000 flags=slider
+                horizontal_flip 0x00980914 (bool)   : default=0 value=0
+                  vertical_flip 0x00980915 (bool)   : default=0 value=0
+           power_line_frequency 0x00980918 (menu)   : min=0 max=3 default=1 value=1 (50 Hz)
+                      sharpness 0x0098091b (int)    : min=-100 max=100 step=1 default=0 value=0 flags=slider
+                  color_effects 0x0098091f (menu)   : min=0 max=15 default=0 value=0 (None)
+                         rotate 0x00980922 (int)    : min=0 max=360 step=90 default=0 value=0 flags=modify-layout
+             color_effects_cbcr 0x0098092a (int)    : min=0 max=65535 step=1 default=32896 value=32896
+
+Codec Controls
+
+             video_bitrate_mode 0x009909ce (menu)   : min=0 max=1 default=0 value=0 (Variable Bitrate) flags=update
+                  video_bitrate 0x009909cf (int)    : min=25000 max=25000000 step=25000 default=10000000 value=10000000
+         repeat_sequence_header 0x009909e2 (bool)   : default=0 value=0
+                force_key_frame 0x009909e5 (button) : value=0 flags=write-only, execute-on-write
+          h264_minimum_qp_value 0x00990a61 (int)    : min=0 max=51 step=1 default=0 value=0
+          h264_maximum_qp_value 0x00990a62 (int)    : min=0 max=51 step=1 default=0 value=0
+            h264_i_frame_period 0x00990a66 (int)    : min=0 max=2147483647 step=1 default=60 value=60
+                     h264_level 0x00990a67 (menu)   : min=0 max=13 default=11 value=11 (4)
+                   h264_profile 0x00990a6b (menu)   : min=0 max=4 default=4 value=4 (High)
+
+Camera Controls
+
+                  auto_exposure 0x009a0901 (menu)   : min=0 max=3 default=0 value=0 (Auto Mode)
+         exposure_time_absolute 0x009a0902 (int)    : min=1 max=10000 step=1 default=1000 value=1000
+     exposure_dynamic_framerate 0x009a0903 (bool)   : default=0 value=0
+             auto_exposure_bias 0x009a0913 (intmenu): min=0 max=24 default=12 value=12 (0 0x0)
+      white_balance_auto_preset 0x009a0914 (menu)   : min=0 max=10 default=1 value=1 (Auto)
+            image_stabilization 0x009a0916 (bool)   : default=0 value=0
+                iso_sensitivity 0x009a0917 (intmenu): min=0 max=4 default=0 value=0 (0 0x0)
+           iso_sensitivity_auto 0x009a0918 (menu)   : min=0 max=1 default=1 value=1 (Auto)
+         exposure_metering_mode 0x009a0919 (menu)   : min=0 max=3 default=0 value=0 (Average)
+                     scene_mode 0x009a091a (menu)   : min=0 max=13 default=0 value=0 (None)
+
+JPEG Compression Controls
+
+            compression_quality 0x009d0903 (int)    : min=1 max=100 step=1 default=30 value=30
+
+```
+
 ## Add User to Video Group
 
 ```bash
