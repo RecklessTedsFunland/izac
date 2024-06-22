@@ -2,15 +2,22 @@
 
 - `image_tools`: `ros2 run image_tools cam2image` reads `/dev/video0` and publishes on `/image`
   - `ros2 run image_tools cam2image --ros-args -p width:=1920 -p height:=1080`
+    
 - `v4l2_camera`: `ros2 run v4l2_camera v4l2_camera_node`
+  - docs: https://gitlab.com/boldhearts/ros2_v4l2_camera/-/tree/jazzy?ref_type=heads
   - `apt install ros-${ROS_DISTRO}-v4l2-camera`
   - `apt install ros-${ROS_DISTRO}-image-transport-plugins`
   - `ros2 param set /v4l2_camera image_size [1280,720]`
-  - docs: https://gitlab.com/boldhearts/ros2_v4l2_camera/-/tree/jazzy?ref_type=heads
+  - `ros2 run v4l2_camera v4l2_camera_node --ros-args -p output_encoding:="mono8" -p image_size:=[320,240]`
+    
 - [ROS2 libcamera node](https://github.com/christianrauch/camera_ros): `sudo apt install ros-$ROS_DISTRO-camera-ros`
   - **WARNING:** doesn't seem to be working for jazzy right now (2024-06-20)
 
 ## `v4l2_camera_node`
+
+- `/boot/firmware/config.txt`
+	- `camera_auto_detect=0`
+	- `# dtoverlay=imx219,cam0`
 
 ```
 $ ros2 topic list
