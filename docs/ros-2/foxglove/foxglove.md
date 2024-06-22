@@ -1,3 +1,5 @@
+![](https://foxglove.dev/images/logo.png)
+
 # Foxglove
 
 ## Install
