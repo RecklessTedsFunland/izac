@@ -1,5 +1,5 @@
 ---
-title: ROS2 Parameters
+title: ROS2 Parameters Python
 date: 31 Aug 2020
 ---
 
