@@ -1,55 +1,68 @@
----
-title: ROS2 Python and Launch Files
-date: 8 Aug 2020
----
+# ROS2 Python and Launch Files
 
 ![](ros2.png)
 
 ## Package Creation
 
-- `colcon` replaces `catkin`
-    - `colcon build` creates the workspace
-    - devel directory is gone
 - install packages with: `rosdep install --from-paths src -i -y`
 - create a package with: `ros2 pkg create <pkg-name> --dependencies [deps]`
 
 ```
-ros_ws
-+- build
-+- install
-|  +- setup.bash
-+- src
-   +- package_cpp
-   |  +- CMakeLists.txt
-   |  +- scripts
-   |  +- src
-   |  +- etc ...
-   +- package_python
-      +- launch
-      +- setup.py
-      +- setup.cfg
-      +- package.xml
+dummy_pkg
+├── CMakeLists.txt
+├── include
+│   └── dummy_pkg
+├── launch
+│   └── dummy_launch.py
+├── LICENSE
+├── package.xml
+├── readme.md
+└── src
+    └── dummy_node.cpp
 ```
 
 ### Launch File
 
-`ros2 launch my_package script.launch.py`
+`ros2 launch <package> <launch.py>`
 
 ```python
-import launch
-import launch.actions
-import launch.substitutions
-import launch_ros.actions
+from launch import LaunchDescription
+from launch_ros.actions import Node
 
 def generate_launch_description():
-    return launch.LaunchDescription([
-        launch.actions.DeclareLaunchArgument(
+    return LaunchDescription([
+        Node(
+            package='rtf_sensors',
+            executable='rtf_imu',
+            name='imu'
+        ),
+        # Node(
+        #     package='rtf_urg',
+        #     executable='rtf_lidar',
+        #     name='lidar',
+        #     parameters=[
+        #         {'port': '/dev/tty.usbmodem14501'}
+        #     ]
+        # ),
+    ])
+```
+
+```python
+from launch import LaunchDescription
+from launch.substitutions import DeclareLaunchArgument, EnvironmentVariable, LaunchConfiguration
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        DeclareLaunchArgument(
             'node_prefix',
-            default_value=[launch.substitutions.EnvironmentVariable('USER'), '_'],
+            default_value=[EnvironmentVariable('USER'), '_'],
             description='Prefix for node names'),
-        launch_ros.actions.Node(
-            package='demo_nodes_cpp', node_executable='talker', output='screen',
-            node_name=[launch.substitutions.LaunchConfiguration('node_prefix'), 'talker']),
+        Node(
+            package='demo_nodes_cpp',
+            node_executable='talker',
+            output='screen',
+            node_name=[LaunchConfiguration('node_prefix'), 'talker']),
     ])
 ```
 
