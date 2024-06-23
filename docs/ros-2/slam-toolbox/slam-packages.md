@@ -1,13 +1,6 @@
----
-title: Using the Nav2 SLAM toolbox in ROS2
-date: tbd
----
+# SLAM Packages in ROS2
 
-## ROS 1
-
-- GMapping (2007), old and hard to use
-- Karto (2010), old but effective and works ok
-- Cartographer, newer, but not effective and complex code base, Google might have stopped support
+> **NOTE:** Not interested in anything ROS1 anymore
 
 ## ROS2
 
