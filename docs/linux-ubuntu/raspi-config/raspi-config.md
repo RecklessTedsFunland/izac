@@ -1,7 +1,4 @@
----
-title: `raspi-config`
-date: 5 Aug 2022
----
+# `raspi-config`
 
 Ubuntu mounts the `boot` directory differently than PiOS, so find the
 current `/boot/firmware` location and remount it to `boot` so
