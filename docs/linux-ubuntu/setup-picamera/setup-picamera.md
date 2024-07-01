@@ -27,8 +27,8 @@ libv4l2rds0t64/noble,now 1.26.1-4build3 arm64 [installed,automatic]
 Add `start_x=1`,`gpu_mem=256` and `dtoverlay=imx219,cam0` to `config.txt`. The
 full output is:
 
-```bash
-$ cat /boot/firmware/config.txt 
+```ini
+# cat /boot/firmware/config.txt 
 [all]
 kernel=vmlinuz
 cmdline=cmdline.txt
@@ -61,8 +61,8 @@ enable_uart=1
 # Autoload overlays for any recognized cameras or displays that are attached
 # to the CSI/DSI ports. Please note this is for libcamera support, *not* for
 # the legacy camera stack
-#camera_auto_detect=1 << comment out
-dtoverlay=imx219,cam0
+camera_auto_detect=0
+# dtoverlay=imx219,cam0 << this didn't work as well
 display_auto_detect=1
 
 # Config settings specific to arm64
@@ -94,7 +94,8 @@ dtoverlay=dwc2,dr_mode=host
 
 [all]
 start_x=1
-gpu_mem=256 # on Pi4, should be able to do 256, 128 otherwise
+# on Pi4, should be able to do 256, 128 otherwise
+gpu_mem=256
 ```
 
 ## Is the Camera There?
@@ -106,9 +107,12 @@ gpu_mem=256 # on Pi4, should be able to do 256, 128 otherwise
 | `supported=1 detected=0` | Electrical connection error or bad camera |
 
 ```bash
-$ vcgencmd get_camerara
+$ vcgencmd get_camera
 supported=1 detected=1, libcamera interfaces=0
 ```
+
+> **NOTE:** ok, now the `i2cdetect` command isn't working, but the camera does work
+> using my pycamera code under ROS2 and OpenCV and python
 
 ```bash
 $ i2cdetect -y 0
@@ -160,8 +164,6 @@ mmal service 16.1 (platform:bcm2835_v4l2-0):
 rpivid (platform:rpivid):
 	/dev/video19
 	/dev/media2
-
-
 ```
 
 ```bash
