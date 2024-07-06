@@ -23,5 +23,5 @@ colcon-build-pkg my_cool_pkg
 This is a plugin that gives you `make clean` like abilities ... should be included.
 
 ```bash
-sudo apt install python3-colcon-clean`
+sudo apt install python3-colcon-clean
 ```
